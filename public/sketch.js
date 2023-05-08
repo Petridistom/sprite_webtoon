@@ -2,7 +2,7 @@ let sprites; // initiate variable sprite
 let amount_sprites = 200 // determines amount of sprites
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(900, 1600);
   noStroke()
   noCursor()
   
