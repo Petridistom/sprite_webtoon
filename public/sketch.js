@@ -1,11 +1,12 @@
-let sprites; // initiate variable sprite
-let amount_sprites = 200 // determines amount of sprites
+let sprites // initiate variable sprite
+let amount_sprites = 0 // determines amount of sprites
 
 function setup() {
-  createCanvas(900, 1600);
+  createCanvas(windowWidth / 1.2, windowHeight* 3/4);
   noStroke()
   noCursor()
-  
+  numSprites()
+
   let posx // initiate coordinates x, y
   let posy
   
@@ -33,14 +34,29 @@ function draw() { // calls each function
   bounce();
 }
 
+function numSprites() {
+  if (windowWidth < 1300) {
+    amount_sprites = 100
+  }
+  else if (windowWidth > 1300 || windowWidth < 2600) {
+    amount_sprites = 180
+  } 
+  
+  else if (windowWidth < 500) {
+    amount_sprites = 8
+  }
+  else {amount_sprites = 250}
+}
+
 function admin() { // draws the backgrounf
                    // and the sprites
   background(0);
   drawSprites();
 }
 
+
 function followMouse() { // creates a circle that
-                          // follows the mouse
+                         // follows the mouse
   fill(255)
   circle(mouseX, mouseY, 30)
 }
@@ -95,3 +111,7 @@ function bounce() { // keeps sprites bounded
   }
 }    
 }
+
+// function mousePressed() {
+//   console.log(windowWidth)
+// }
