@@ -45,7 +45,7 @@ function draw() { // calls each function
   
 }
 
-function admin() { // draws the backgrounf
+function admin() { // draws the background
                    // and the sprites
   background(0);
   drawSprites();
