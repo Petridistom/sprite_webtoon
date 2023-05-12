@@ -8,8 +8,9 @@ html, body {
 
 /* center the canvas */
   canvas {
+
     position: absolute;
-    top: 12%; 
+    top: 14%; 
     left: 8%;
   }
   
@@ -31,6 +32,10 @@ html, body {
   a {
     color: deeppink;
     text-decoration: none;
+  }
+
+  a:hover {
+    color: blueviolet
   }
 
   #play_title {

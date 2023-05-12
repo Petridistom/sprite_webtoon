@@ -1,12 +1,20 @@
-let sprites // initiate variable sprite
-let amount_sprites = 0 // determines amount of sprites
+let sprites; // initiate variable sprite
+let amount_sprites = 110 // determines amount of sprites
+let ghost
+let ghost_flipped
+let ghostSad
+let cross
 
 function setup() {
-  createCanvas(windowWidth / 1.2, windowHeight* 3/4);
+  ghost = loadImage('images/ghost.png')
+  ghost_flipped = loadImage('images/ghostFlipped.png')
+  ghostSad = loadImage('images/ghostSad.png')
+  cross = loadImage('images/cross.png')
+  
+  createCanvas(windowWidth / 1.2, windowHeight / 1.2);
   noStroke()
   noCursor()
-  numSprites()
-
+  
   let posx // initiate coordinates x, y
   let posy
   
@@ -14,13 +22,15 @@ function setup() {
                         // define sprite properties
   while (sprites.length <= amount_sprites) {
     let sprite = new sprites.Sprite(random(width), random(height), 40, 40)
-    sprite.shapeColor = 'deeppink';
+    sprite.img = cross;
+    sprite.rotationLock = true;
     sprite.acceleration = createVector()
     sprite.velocity = createVector()
     sprite.postition = createVector (posx, posy)
     sprite.maxDist = 100
     sprite.maxForce = 5
     sprite.dampening = 0.1
+    sprite.debug = mouse.pressing()
   }
 }
 
@@ -29,23 +39,10 @@ function draw() { // calls each function
   // functions are 
   // defined below
   admin();
-  followMouse();
   repel();
   bounce();
-}
-
-function numSprites() {
-  if (windowWidth < 1300) {
-    amount_sprites = 100
-  }
-  else if (windowWidth > 1300 || windowWidth < 2600) {
-    amount_sprites = 180
-  } 
+  changeCursor();
   
-  else if (windowWidth < 500) {
-    amount_sprites = 8
-  }
-  else {amount_sprites = 250}
 }
 
 function admin() { // draws the backgrounf
@@ -54,11 +51,20 @@ function admin() { // draws the backgrounf
   drawSprites();
 }
 
-
-function followMouse() { // creates a circle that
-                         // follows the mouse
-  fill(255)
-  circle(mouseX, mouseY, 30)
+function changeCursor() {
+  //check which way the mouse is moving
+  if (mouseX - pmouseX < 0) {
+    image(ghost, mouseX, mouseY, 50, 50)
+    setTimeout(1000)
+  }
+  else if (mouseX - pmouseX > 0) {
+    image(ghost_flipped, mouseX, mouseY, 50, 50)
+    setTimeout(1000)
+  } 
+  else {
+    image(ghostSad, mouseX, mouseY, 50, 50)  
+    setTimeout(1000)
+  }
 }
 
 function repel() { // updates velocity values
@@ -111,7 +117,3 @@ function bounce() { // keeps sprites bounded
   }
 }    
 }
-
-// function mousePressed() {
-//   console.log(windowWidth)
-// }
