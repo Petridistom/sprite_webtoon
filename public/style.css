@@ -20,6 +20,7 @@ html, body {
     padding-left: 25%;
     padding-right: 25%;
     color: aliceblue;
+    text-decoration: underline;
   }
 
   h3 {

@@ -1,15 +1,14 @@
 let sprites; // initiate variable sprite
-let amount_sprites = 110 // determines amount of sprites
-let ghost
-let ghost_flipped
-let ghostSad
-let cross
+let amount_sprites = 500 // determines amount of sprites
 
 function setup() {
   ghost = loadImage('images/ghost.png')
   ghost_flipped = loadImage('images/ghostFlipped.png')
   ghostSad = loadImage('images/ghostSad.png')
-  cross = loadImage('images/cross.png')
+  open = loadImage('images/open.png')
+  shut = loadImage('images/shut.png')
+
+  eye = open
   
   createCanvas(windowWidth / 1.2, windowHeight / 1.2);
   noStroke()
@@ -22,7 +21,7 @@ function setup() {
                         // define sprite properties
   while (sprites.length <= amount_sprites) {
     let sprite = new sprites.Sprite(random(width), random(height), 40, 40)
-    sprite.img = cross;
+    sprite.img = eye;
     sprite.rotationLock = true;
     sprite.acceleration = createVector()
     sprite.velocity = createVector()
@@ -31,17 +30,32 @@ function setup() {
     sprite.maxForce = 5
     sprite.dampening = 0.1
     sprite.debug = mouse.pressing()
-  }
+
+
+    sprite.flipEye = e => {
+
+      if (mouseX > sprite.position.x - 150 && mouseX < sprite.position.x + 150 && mouseY > sprite.position.y - 150 && mouseY < sprite.position.y + 150) {
+        eye = shut
+        sprite.img = eye
+      } else {
+        eye = open
+        sprite.img = eye
+      }
+      }
+    }
 }
+
 
 function draw() { // calls each function
                   // once per frame
   // functions are 
   // defined below
+  changeEye();  
   admin();
   repel();
   bounce();
-  changeCursor();
+  flipCursor();
+
   
 }
 
@@ -51,7 +65,7 @@ function admin() { // draws the background
   drawSprites();
 }
 
-function changeCursor() {
+function flipCursor() {
   //check which way the mouse is moving
   if (mouseX - pmouseX < 0) {
     image(ghost, mouseX, mouseY, 50, 50)
@@ -81,6 +95,12 @@ function repel() { // updates velocity values
     
     sprites[i].position.add(sprites[i].velocity.mult(1-sprites[i].dampening));
   }
+}
+
+function changeEye () {
+  sprites.forEach((s) => {
+    s.flipEye()
+  })
 }
 
 function bounce() { // keeps sprites bounded
