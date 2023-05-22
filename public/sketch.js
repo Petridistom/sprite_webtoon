@@ -1,5 +1,5 @@
 let sprites; // initiate variable sprite
-let amount_sprites = 150 // determines amount of sprites
+let amount_sprites = 110 // determines amount of sprites
 
 
 function setup() {
