@@ -1,7 +1,6 @@
 let sprites; // initiate variable sprite
 let amount_sprites = 110 // determines amount of sprites
 
-
 function setup() {
   ghost = loadImage('images/ghost.png')
   ghost_flipped = loadImage('images/ghostFlipped.png')
