@@ -1,5 +1,8 @@
 let sprites; // initiate variable sprite
-let amount_sprites = 300 // determines amount of sprites
+let amount_sprites = 200 // determines amount of sprites
+if (window.width > 1920) {
+  amount_sprites = 500
+}
 
 function setup() {
   ghost = loadImage('images/ghost.png')
