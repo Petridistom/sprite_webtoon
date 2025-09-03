@@ -1,5 +1,4 @@
-// sprite group + amount
-let sprites;
+let sprites; 
 let amount_sprites = 110;
 
 // ghost images
@@ -14,13 +13,12 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth / 1.2, windowHeight / 1.2);
   noStroke();
   noCursor();
 
   sprites = new Group();
 
-  // create all sprites
   for (let i = 0; i < amount_sprites; i++) {
     let s = new Sprite(random(width), random(height), 40, 40);
     s.img = openEye;
@@ -33,7 +31,7 @@ function setup() {
     s.maxForce = 5;
     s.dampening = 0.1;
 
-    // flip eye function
+    // eye-flip behavior
     s.flipEye = () => {
       if (
         abs(mouseX - s.position.x) < 150 &&
@@ -51,15 +49,16 @@ function setup() {
 
 function draw() {
   background(0);
+  drawSprites();   // p5.play renderer
 
   changeEye();
   repel();
   bounce();
-  changeCursor();
+  flipCursor();
 }
 
-// 👻 draw ghost cursor depending on movement
-function changeCursor() {
+// 👻 ghost cursor
+function flipCursor() {
   let dx = mouseX - pmouseX;
 
   if (dx < 0) {
@@ -71,14 +70,14 @@ function changeCursor() {
   }
 }
 
-// 👀 toggle eyes depending on mouse proximity
+// 👀 eye behavior
 function changeEye() {
   sprites.forEach((s) => {
     s.flipEye();
   });
 }
 
-// 🌀 repel sprites away from mouse
+// 🌀 repel sprites from mouse
 function repel() {
   sprites.forEach((s) => {
     let mousePos = createVector(mouseX, mouseY);
@@ -94,25 +93,18 @@ function repel() {
 // 🔄 keep sprites inside canvas
 function bounce() {
   sprites.forEach((s) => {
-    // left wall
     if (s.position.x - s.w / 2 < 0) {
       s.position.x = s.w / 2;
       s.velocity.x *= -1;
     }
-
-    // right wall
     if (s.position.x + s.w / 2 > width) {
       s.position.x = width - s.w / 2;
       s.velocity.x *= -1;
     }
-
-    // top wall
     if (s.position.y - s.h / 2 < 0) {
       s.position.y = s.h / 2;
       s.velocity.y *= -1;
     }
-
-    // bottom wall
     if (s.position.y + s.h / 2 > height) {
       s.position.y = height - s.h / 2;
       s.velocity.y *= -1;
